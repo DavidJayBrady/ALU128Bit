@@ -34,10 +34,11 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
     output logic                o_flag ;
     output logic                s_flag ;
 
-    logic firstCout;
+    logic [ DWIDTH - 1:0] Couts;
 
-    logic cin;
-    assign cin = (opsel == 3'b100)? 1:
+    logic firstCin;
+    assign firstCin = (opsel == 3'b011)? 1:
+                 (opsel == 3'b100)? 1:
                  (opsel == 3'b110)? 1:
                  // when else should cin be one?
                                     0;
@@ -47,17 +48,30 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
                         .b(op2),
                         .opsel(opsel),
                         .mode(mode),
-                        .cin(cin),
-                        .cout(firstCout),
+                        .cin(firstCin),
+                        .cout(Couts[0]),
                         .result(result[0])
                      );
 
-//    genvar i;
-//    generate
-//        for (i=0; i < DWIDTH; i++) begin: creation
-            
-//        end
-//    endgenerate
+    logic tempCarryIndex;
+
+    genvar i;
+    generate
+        for (i=1; i < DWIDTH; i++) begin: creation
+
+            assign tempCarryIndex = Couts[i];
+
+            ALU1B   (
+                     .a(op1),
+                     .b(op2),
+                     .opsel(opsel),
+                     .mode(mode),
+                     .cin(Couts[tempCarryIndex]),// may not be correct
+                     .cout(Couts[i]), // issue might also be here
+                     .result(result[i])
+                    );
+        end
+    endgenerate
     
 
 endmodule ;

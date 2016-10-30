@@ -26,7 +26,7 @@ module ALU1B(
     input [2:0] opsel,
     input mode,
     input cin,
-    output cout, // changed from o_fla
+    output cout,
     output result
     );
         
@@ -62,7 +62,7 @@ module ALU1B(
     Logic ALULogic (
                       .a(a),
                       .b(b),
-                      .cin(cin),
+                      .cin(cin), // keep eye on this
                       .opsel(opsel),
                       .cout(logicCout),
                       .result(logicResult)

@@ -42,6 +42,8 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
                  (opsel == 3'b110)? 1:
                  // when else should cin be one?
                                     0;
+                                    
+    logic cout127;
 
     ALU1B FirstALU (
                         .a(op1[0]),
@@ -52,31 +54,30 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
                         .cout(Couts[0]),
                         .result(result[0])
                      );
-
-    logic tempCarryInIndex;
-
     generate
     genvar i;
         for (i=1; i < DWIDTH; i++) begin: creation
-
-            assign tempCarryInIndex = i-1;
 
             ALU1B OtherALUs   (
                               .a(op1[i]),
                               .b(op2[i]),
                               .opsel(opsel),
                               .mode(mode),
-                              .cin(Couts[tempCarryInIndex]),
+                              .cin(Couts[i-1]),
                               .cout(Couts[i]),
                               .result(result[i])
                             );
+           assign couts127 = (i == 127)? Couts[i]:
+                                            0;
+                                              
         end
     endgenerate
-    
-    // lastCout = Couts[127] .. or is it 0? or 1?
-    
-    assign s_flag = Couts[127];
-    // sign flag found by taking the result[0] or result[127]
+        
+    assign s_flag = result[127];
+    assign z_flag = ~(|result);
+    assign c_flag = cout127;
+    assign o_flag = (op1[127] == op2[127] & result[127] != op1[127])? 1:
+                                                                0;
     
     
 endmodule 

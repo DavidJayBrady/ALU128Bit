@@ -66,12 +66,10 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
                      .b(op2),
                      .opsel(opsel),
                      .mode(mode),
-                     .cin(Couts[tempCarryInIndex]),// may not be correct
-                     .cout(Couts[i]), // issue might also be here
+                     .cin(Couts[tempCarryInIndex]),
+                     .cout(Couts[i]),
                      .result(result[i])
                     );
         end
     endgenerate
-    
-
 endmodule 

@@ -53,20 +53,20 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
                         .result(result[0])
                      );
 
-    logic tempCarryIndex;
+    logic tempCarryInIndex;
 
-    genvar i;
     generate
+    genvar i;
         for (i=1; i < DWIDTH; i++) begin: creation
 
-            assign tempCarryIndex = Couts[i];
+            assign tempCarryInIndex = Couts[i-1];
 
             ALU1B   (
                      .a(op1),
                      .b(op2),
                      .opsel(opsel),
                      .mode(mode),
-                     .cin(Couts[tempCarryIndex]),// may not be correct
+                     .cin(Couts[tempCarryInIndex]),// may not be correct
                      .cout(Couts[i]), // issue might also be here
                      .result(result[i])
                     );
@@ -74,4 +74,4 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
     endgenerate
     
 
-endmodule ;
+endmodule 

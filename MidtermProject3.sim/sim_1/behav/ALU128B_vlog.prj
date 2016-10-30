@@ -2,6 +2,7 @@
 sv xil_defaultlib  "../../../MidtermProject3.srcs/sources_1/new/Logic.sv"
 sv xil_defaultlib  "../../../MidtermProject3.srcs/sources_1/new/FA1B.sv"
 sv xil_defaultlib  "../../../MidtermProject3.srcs/sources_1/new/ALU1B.sv"
+sv xil_defaultlib  "../../../MidtermProject3.srcs/sources_1/new/ALU128B.sv"
 
 # compile glbl module
 verilog xil_defaultlib "glbl.v"

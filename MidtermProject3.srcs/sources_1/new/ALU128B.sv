@@ -44,8 +44,8 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
                                     0;
 
     ALU1B FirstALU (
-                        .a(op1),
-                        .b(op2),
+                        .a(op1[0]),
+                        .b(op2[0]),
                         .opsel(opsel),
                         .mode(mode),
                         .cin(firstCin),
@@ -61,20 +61,21 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
 
             assign tempCarryInIndex = i-1;
 
-            ALU1B   (
-                     .a(op1),
-                     .b(op2),
-                     .opsel(opsel),
-                     .mode(mode),
-                     .cin(Couts[tempCarryInIndex]),
-                     .cout(Couts[i]),
-                     .result(result[i])
-                    );
+            ALU1B OtherALUs   (
+                              .a(op1[i]),
+                              .b(op2[i]),
+                              .opsel(opsel),
+                              .mode(mode),
+                              .cin(Couts[tempCarryInIndex]),
+                              .cout(Couts[i]),
+                              .result(result[i])
+                            );
         end
     endgenerate
     
     // lastCout = Couts[127] .. or is it 0? or 1?
     
+    assign s_flag = Couts[127];
     // sign flag found by taking the result[0] or result[127]
     
     

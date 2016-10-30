@@ -67,7 +67,7 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
                               .cout(Couts[i]),
                               .result(result[i])
                             );
-           assign couts127 = (i == DWIDTH-1)? Couts[i]:
+           assign coutFinal = (i == DWIDTH-1)? Couts[i]:
                                             0;
                                               
         end

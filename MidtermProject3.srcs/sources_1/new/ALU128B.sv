@@ -59,7 +59,7 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
     genvar i;
         for (i=1; i < DWIDTH; i++) begin: creation
 
-            assign tempCarryInIndex = Couts[i-1];
+            assign tempCarryInIndex = i-1;
 
             ALU1B   (
                      .a(op1),
@@ -72,4 +72,10 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
                     );
         end
     endgenerate
+    
+    // lastCout = Couts[127] .. or is it 0? or 1?
+    
+    // sign flag found by taking the result[0] or result[127]
+    
+    
 endmodule 

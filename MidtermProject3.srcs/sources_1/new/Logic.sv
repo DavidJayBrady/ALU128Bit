@@ -36,6 +36,6 @@ module Logic(
                                       cin;
 
     assign cout = (opsel == 3'b101)? a:
-                                  cout;
+                                     0;
 
 endmodule

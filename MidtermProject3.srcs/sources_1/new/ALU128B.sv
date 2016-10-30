@@ -43,7 +43,7 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
                       // when else should cin be one?
                                          0;
                                     
-    logic coutFinal;
+    //logic coutFinal;
 
     ALU1B FirstALU (
                         .a(op1[0]),
@@ -67,15 +67,15 @@ module ALU128B ( op1 , op2 , opsel , mode , result , c_flag , z_flag , o_flag , 
                               .cout(Couts[i]),
                               .result(result[i])
                             );
-           assign coutFinal = (i == DWIDTH-1)? Couts[i]:
-                                            0;
+           //assign coutFinal = (i == DWIDTH-1)? Couts[i]:
+           //                                 0;
                                               
         end
     endgenerate
         
     assign s_flag = result[DWIDTH-1];
     assign z_flag = ~(|result);
-    assign c_flag = coutFinal;
+    assign c_flag = Couts[DWIDTH-1];
     assign o_flag = (op1[DWIDTH-1] == op2[DWIDTH-1] & result[DWIDTH-1] != op1[DWIDTH-1])? 1:
                                                                 0;
     

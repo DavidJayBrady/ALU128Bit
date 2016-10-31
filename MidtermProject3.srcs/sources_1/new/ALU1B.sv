@@ -62,7 +62,7 @@ module ALU1B(
     Logic ALULogic (
                       .a(a),
                       .b(b),
-                      .cin(cin), // keep eye on this
+                      .cin(cin),
                       .opsel(opsel),
                       .cout(logicCout),
                       .result(logicResult)
